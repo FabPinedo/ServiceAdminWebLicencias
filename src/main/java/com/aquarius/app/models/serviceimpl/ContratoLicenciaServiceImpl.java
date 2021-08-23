@@ -12,6 +12,7 @@ import com.aquarius.app.models.dao.IContratoLicenciaDao;
 import com.aquarius.app.models.entity.ContratoLicencia;
 
 import com.aquarius.app.models.service.IContratoLicenciaService;
+import com.aquarius.app.util.JwtUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -35,11 +36,15 @@ public class ContratoLicenciaServiceImpl implements IContratoLicenciaService{
 	}
 	
 	@Override
-	@Transactional
 	public String exportJSONfindByCodigo(String token) {
 		ContratoLicencia licencia = licenciaDao.findByCodigo(token);
+		ContratoLicencia jwtLicencia = new ContratoLicencia();
+		JwtUtil jwt = new JwtUtil();
+		if(licencia != null) {
+			jwtLicencia = jwt.JwtConvert(licencia);
+		}
 		Gson gson = new GsonBuilder().serializeNulls().create();
-		String customerInJson = gson.toJson(licencia);
+		String customerInJson = gson.toJson(jwtLicencia);
 		return customerInJson;
 	}
 

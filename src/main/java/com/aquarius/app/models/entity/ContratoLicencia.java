@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "CONTRATO_LICENCIA")
@@ -60,7 +61,15 @@ public class ContratoLicencia {
 	@Column(name="cant_usuarios")
 	private Long cantusuarios;
 	
-
+	@Transient
+	private String fechainicio;
+	
+	@Transient
+	private String fechafin;
+	
+	@Transient
+	private String estadoE;
+	
 	public Long getId() {
 		return id;
 	}
@@ -163,6 +172,30 @@ public class ContratoLicencia {
 
 	public void setCantusuarios(Long cantusuarios) {
 		this.cantusuarios = cantusuarios;
+	}
+
+	public String getFechainicio() {
+		return fechainicio;
+	}
+
+	public void setFechainicio(String fechainicio) {
+		this.fechainicio = fechainicio;
+	}
+
+	public String getFechafin() {
+		return fechafin;
+	}
+
+	public void setFechafin(String fechafin) {
+		this.fechafin = fechafin;
+	}
+
+	public String getEstadoE() {
+		return estadoE;
+	}
+
+	public void setEstadoE(String estadoE) {
+		this.estadoE = estadoE;
 	}
 
 	
