@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.aquarius.app.models.entity.ContratoLicencia;
-
 import com.aquarius.app.models.service.IConexionServidorService;
 import com.aquarius.app.models.service.IContratoLicenciaService;
 import com.aquarius.app.models.service.IEmpresaService;
@@ -51,10 +50,19 @@ public class ContratoLicenciaController {
 		
 	return licenciaService.findAll();
 		}
+	@GetMapping("/find/listado/activos")
+	public List<ContratoLicencia> ListadoActivos() {
+	return licenciaService.ListadoActivos();
+		}
 	@GetMapping("/find/estado/page/{page}")
 	public Page<ContratoLicencia> findbyEstado(@PathVariable int page) {
 		Pageable pageable=PageRequest.of(page, 5);
 	return licenciaService.findAllByEstado(pageable);
+		}
+	@GetMapping("/find/listado/codempresa/{id}")
+	public List<ContratoLicencia> findbyIDEmpresa(@PathVariable Long id) {
+		
+	return licenciaService.findbyIDEmpresa(id);
 		}
 	
 	@GetMapping("/find/page/{page}")

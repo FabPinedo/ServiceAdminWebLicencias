@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import com.aquarius.app.models.entity.ContratoLicencia;
 
 
+
 public interface IContratoLicenciaService {
 	
 	public ContratoLicencia findById(Long id);
@@ -22,5 +23,7 @@ public interface IContratoLicenciaService {
 	public Page<ContratoLicencia> findAllByEstado(Pageable pageable);
 	public Page<ContratoLicencia> findByRazonsocial(String razonsocial,Pageable pageable);
 	public Page<ContratoLicencia> findByRuc(String ruc,Pageable pageable);
+	public List<ContratoLicencia> ListadoActivos();
+	public List<ContratoLicencia> findbyIDEmpresa(Long id);
 	
 }

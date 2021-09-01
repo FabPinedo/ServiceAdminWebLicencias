@@ -91,6 +91,16 @@ public class ContratoLicenciaServiceImpl implements IContratoLicenciaService{
 		// TODO Auto-generated method stub
 		return licenciaDao.findByRUC(ruc, pageable);
 	}
+	@Override
+	public List<ContratoLicencia> ListadoActivos() {
+		// TODO Auto-generated method stub
+		return licenciaDao.ListadoActivos();
+	}
+	@Override
+	public List<ContratoLicencia> findbyIDEmpresa(Long id) {
+		// TODO Auto-generated method stub
+		return licenciaDao.findbyIDEmpresa(id);
+	}
 
 	
 
