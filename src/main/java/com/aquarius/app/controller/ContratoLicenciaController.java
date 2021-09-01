@@ -121,7 +121,13 @@ public class ContratoLicenciaController {
 	
 	@GetMapping("find/estado/codigo/{codigo}")
 	public Boolean estadoLicencia(@PathVariable String codigo) {
-		return licenciaService.findByCodigo(codigo).getEstado();
+		ContratoLicencia licencia = new ContratoLicencia();
+		Boolean estado = false;
+		licencia = licenciaService.findByCodigo(codigo);
+		if(licencia != null) {
+			estado = licencia.getEstado();
+		}
+		return estado; 
 	}
 
 	@DeleteMapping(value="/find/id/{id}")
