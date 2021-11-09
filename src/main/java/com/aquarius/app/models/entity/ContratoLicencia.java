@@ -198,5 +198,13 @@ public class ContratoLicencia {
 		this.estadoE = estadoE;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "ContratoLicencia [id=" + id + ", codempresa=" + codempresa + ", empresa=" + empresa + ", codsistema="
+				+ codsistema + ", sistema=" + sistema + ", codconexion=" + codconexion + ", conexion=" + conexion
+				+ ", fechainicontrato=" + fechainicontrato + ", fechafincontrato=" + fechafincontrato + ", estado="
+				+ estado + ", token=" + token + ", cantactivos=" + cantactivos + ", cantusuarios=" + cantusuarios
+				+ ", fechainicio=" + fechainicio + ", fechafin=" + fechafin + ", estadoE=" + estadoE + "]";
+	}
+
 }
