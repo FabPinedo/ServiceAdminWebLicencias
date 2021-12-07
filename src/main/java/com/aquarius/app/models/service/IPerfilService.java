@@ -6,17 +6,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 
-import com.aquarius.app.models.entity.Perfil;
+import com.aquarius.app.models.entity.MaePerfil;
 
 public interface IPerfilService {
-	public List<Perfil> findAll();
+	public List<MaePerfil> findAll();
 
-	public Perfil SavePerfil(Perfil perfil);
+	public MaePerfil SavePerfil(MaePerfil perfil);
 
 	public void deletePerfil(Long id);
 
-	public Perfil findById(Long id);
+	public MaePerfil findById(Long id);
 	
-	public Page<Perfil> findAll(Pageable pageable);
+	public Page<MaePerfil> findAll(Pageable pageable);
 	
 }

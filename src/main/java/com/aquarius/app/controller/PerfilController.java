@@ -11,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,30 +20,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aquarius.app.models.entity.Perfil;
+import com.aquarius.app.models.entity.MaePerfil;
 
 import com.aquarius.app.models.service.IPerfilService;
 
 @RestController
-@RequestMapping("/Perfil")
-@CrossOrigin(origins="*")
+@RequestMapping("/errperfil")
 public class PerfilController {
 	@Autowired
 	private IPerfilService perfilservice;
 	@GetMapping("/find/listado")
-	public List<Perfil> index() {
+	public List<MaePerfil> index() {
 	return perfilservice.findAll();
 		}
 	
 	@GetMapping("/find/page/{page}")
-	public Page<Perfil> index(@PathVariable Integer page) {
+	public Page<MaePerfil> index(@PathVariable Integer page) {
 		Pageable pageable=PageRequest.of(page, 5);
 	return perfilservice.findAll(pageable);
 		}
 	
 	@GetMapping("/find/id/{id}")
 	public ResponseEntity<?> show(@PathVariable long id){
-		Perfil perfil= null;
+		MaePerfil perfil= null;
 		Map<String,Object> respuesta= new HashMap<>();
 		try {
 			 perfil=perfilservice.findById(id);
@@ -60,14 +58,14 @@ public class PerfilController {
 			return new ResponseEntity<Map<String,Object>>(respuesta,HttpStatus.NOT_FOUND);		
 		}
 	
-	return new ResponseEntity<Perfil>(perfil, HttpStatus.OK);
+	return new ResponseEntity<MaePerfil>(perfil, HttpStatus.OK);
 		}
 	
 
 	
 	@PostMapping("/post")
-	public ResponseEntity<?> addPerfil(@RequestBody Perfil perfil) {
-		Perfil perfilnuevo= null;
+	public ResponseEntity<?> addPerfil(@RequestBody MaePerfil perfil) {
+		MaePerfil perfilnuevo= null;
 		Map<String,Object> respuesta= new HashMap<>();
 		try {
 			perfilnuevo=perfilservice.SavePerfil(perfil);
@@ -103,10 +101,10 @@ public class PerfilController {
 		}
 
 	@PutMapping("/find/id/{id}")
-	public ResponseEntity<?> updatePerfil(@RequestBody Perfil perfil,@PathVariable long id) {
-		Perfil perfilActualizado=null;
+	public ResponseEntity<?> updatePerfil(@RequestBody MaePerfil perfil,@PathVariable long id) {
+		MaePerfil perfilActualizado=null;
 		Map<String,Object> respuesta= new HashMap<>();
-		Perfil perfilActual=perfilservice.findById(id);
+		MaePerfil perfilActual=perfilservice.findById(id);
 		if(perfilActual==null) {
 			respuesta.put("Mensaje","La perfil de ID: ".concat(Long.toString(id).concat("  No existe en la base de datos")));
 			return new ResponseEntity<Map<String,Object>>(respuesta,HttpStatus.NOT_FOUND);		

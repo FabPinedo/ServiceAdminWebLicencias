@@ -4,26 +4,27 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-
-
-import com.aquarius.app.models.entity.Usuario;
+import com.aquarius.app.models.entity.MaeUsuario;
+import com.aquarius.app.models.entity.face.IUsuarioFace;
 
 public interface IUsuarioService {
-	public List<Usuario> findAll();
-
-	public Usuario SaveUsuario(Usuario usuario);
-
+	public List<MaeUsuario> findAll();
+	public MaeUsuario SaveUsuario(MaeUsuario usuario);
 	public void deleteUsuario(String codusuario);
-
-	public Usuario findById(String codusuario);
+	public MaeUsuario findById(String codusuario);
+	public Page<MaeUsuario> findByCodigoruc(String ruc,Pageable pageable);
+	public Page<MaeUsuario> findByRazonsocial(String razonsocial,Pageable pageable);
+	public Page<MaeUsuario> findAll(Pageable pageable);
+	public Page<MaeUsuario> findAllEstado(Pageable pageable);
+	public MaeUsuario ValidarUsuario(String user,String pass);
 	
-	public Page< Usuario> findByCodigoruc(String ruc,Pageable pageable);
-	
-	public Page< Usuario> findByRazonsocial(String razonsocial,Pageable pageable);
-	
-	public Page<Usuario> findAll(Pageable pageable);
-	public Page<Usuario> findAllEstado(Pageable pageable);
-	public Usuario ValidarUsuario(String user,String pass);
+	public Boolean save(MaeUsuario usuario);
+	public MaeUsuario findByUsuario(String usuario);
+	public List<IUsuarioFace> findAllUsuarioFace();
+	public List<IUsuarioFace> listUsuarioFaceByNombre(String search);
+	public IUsuarioFace findUsuarioFaceByUsuario(String usuario);
+	public int disableUsuario(String usuario);
+	public int enableUsuario(String usuario);
+	public int findCountUsuario(String usuario);
 
 }
