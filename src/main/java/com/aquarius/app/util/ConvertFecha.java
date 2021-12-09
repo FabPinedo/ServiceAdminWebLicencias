@@ -13,5 +13,12 @@ public class ConvertFecha {
 		String todayAsString = df.format(fecha);
 		return todayAsString;
 	}
+	
+	public String getFechaActualConcat() {
+		String pattern = "ddMMyyyy";
+		DateFormat df = new SimpleDateFormat(pattern);
+		String todayAsString = df.format(new Date());
+		return todayAsString;
+	}
 
 }

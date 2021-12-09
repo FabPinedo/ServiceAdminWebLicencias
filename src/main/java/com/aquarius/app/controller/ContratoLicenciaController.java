@@ -13,7 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,17 +23,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-
 import com.aquarius.app.models.entity.ContratoLicencia;
 import com.aquarius.app.models.service.IConexionServidorService;
 import com.aquarius.app.models.service.IContratoLicenciaService;
 import com.aquarius.app.models.service.IEmpresaService;
 import com.aquarius.app.models.service.ISistemaService;
+import com.aquarius.app.util.ConvertFecha;
 
 @RestController
-@RequestMapping("Contrato")
-@CrossOrigin(origins="*" )
+@RequestMapping("contrato")
 public class ContratoLicenciaController {
 	
 	@Autowired
@@ -44,6 +42,16 @@ public class ContratoLicenciaController {
 	private IConexionServidorService conexionService;
 	@Autowired
 	private ISistemaService sistemaService;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	@GetMapping("prueba")
+	public String sendToken() {
+		ConvertFecha util = new ConvertFecha();
+		String fecha;
+		fecha = util.getFechaActualConcat();
+		return fecha;
+	}
 
 	@GetMapping("/find/listado")
 	public List<ContratoLicencia> index() {
@@ -154,11 +162,18 @@ public class ContratoLicenciaController {
 	public ResponseEntity<?> addContrato(@RequestBody ContratoLicencia contrato) {
 		ContratoLicencia licencianueva= null;
 		Map<String,Object> respuesta= new HashMap<>();
+		ConvertFecha util = new ConvertFecha();
+		String codigo = "";
+		String sigla = "LICAQ";
+		
 		try {
 			
 			contrato.setEmpresa(empresaService.findById(contrato.getCodempresa()));
 			contrato.setSistema(sistemaService.findById(contrato.getCodsistema()));
 			contrato.setConexion(conexionService.findById(contrato.getCodconexion()));
+			codigo = sigla + contrato.getEmpresa().getId() + contrato.getSistema().getId() + util.getFechaActualConcat();
+			contrato.setToken(passwordEncoder.encode(codigo));
+			
 			licencianueva=licenciaService.SaveContrato(contrato);
 		} catch (DataAccessException e) {
 			// TODO: handle exception
@@ -172,13 +187,13 @@ public class ContratoLicenciaController {
 		return new ResponseEntity<Map<String,Object>>(respuesta,HttpStatus.CREATED);
 		}
 		
-	
-	
-	
 	@PutMapping("/find/id/{id}")
 	public ResponseEntity<?> updateContrato(@RequestBody ContratoLicencia contrato,@PathVariable long id) {
 		ContratoLicencia licenciaActualizada=null;
 		Map<String,Object> respuesta= new HashMap<>();
+		ConvertFecha util = new ConvertFecha();
+		String codigo = "";
+		String sigla = "LICAQ";
 		ContratoLicencia contratoActual=licenciaService.findById(id);
 		if(contratoActual==null) {
 			respuesta.put("Mensaje","La licencia de ID: ".concat(Long.toString(id).concat("  No existe en la base de datos")));
@@ -192,10 +207,13 @@ public class ContratoLicenciaController {
 			contratoActual.setSistema(sistemaService.findById(contrato.getCodsistema()));
 			contratoActual.setCodconexion(contrato.getCodconexion());
 			contratoActual.setConexion(conexionService.findById(contrato.getCodconexion()));
+			
+			codigo = sigla + contrato.getEmpresa().getId() + contrato.getSistema().getId() + util.getFechaActualConcat();
+			contratoActual.setToken(passwordEncoder.encode(codigo));
+			
 			contratoActual.setEstado(contrato.getEstado());
 			contratoActual.setFechafincontrato(contrato.getFechafincontrato());
 			contratoActual.setFechainicontrato(contrato.getFechainicontrato());
-			contratoActual.setToken(contrato.getToken());
 			contratoActual.setCantactivos(contrato.getCantactivos());
 			contratoActual.setCantusuarios(contrato.getCantusuarios());
 			licenciaActualizada=licenciaService.SaveContrato(contratoActual);

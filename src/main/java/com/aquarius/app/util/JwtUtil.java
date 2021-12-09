@@ -1,7 +1,8 @@
 package com.aquarius.app.util;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 
 import com.aquarius.app.models.entity.ContratoLicencia;
@@ -10,8 +11,8 @@ import com.aquarius.app.models.entity.ContratoLicenciaEncrypt;
 public class JwtUtil {
 	
 	public ContratoLicencia JwtConvert(ContratoLicencia licencia) {
-		
-		Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+		String clientSecret = licencia.getToken();
+		Key key = Keys.hmacShaKeyFor(clientSecret.getBytes(StandardCharsets.UTF_8));
 		ConvertFecha convertFecha = new ConvertFecha();
 		
 		String bdservinstancia = Jwts.builder().setSubject(licencia.getConexion().getBdservinstancia()).signWith(key).compact();
@@ -27,11 +28,6 @@ public class JwtUtil {
 		String fechainicontrato = Jwts.builder().setSubject(convertFecha.getConvertFechaToText(licencia.getFechainicontrato())).signWith(key).compact();
 		String fechafincontrato = Jwts.builder().setSubject(convertFecha.getConvertFechaToText(licencia.getFechafincontrato())).signWith(key).compact();
 		String estado = Jwts.builder().setSubject(licencia.getEstado().toString()).signWith(key).compact();
-		
-		System.out.println(fechainicontrato);
-		System.out.println(fechafincontrato);
-		System.out.println(estado);
-		
 		String token = Jwts.builder().setSubject(licencia.getToken()).signWith(key).compact();
 
 		licencia.getConexion().setBdservinstancia(bdservinstancia);
