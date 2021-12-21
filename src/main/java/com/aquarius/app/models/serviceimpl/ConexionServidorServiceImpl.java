@@ -53,14 +53,14 @@ public class ConexionServidorServiceImpl implements IConexionServidorService{
 		return conexionDao.findById(id).orElse(null);
 	}
 	@Override
-	public Page<ConexionServidor> findByRazonsocial(String razonsocial, Pageable pageable) {
+	public List<ConexionServidor> findByRazonsocial(String razonsocial) {
 		// TODO Auto-generated method stub
-		return conexionDao.findByRazonsocial(razonsocial, pageable);
+		return conexionDao.findByRazonsocial(razonsocial);
 	}
 	@Override
-	public Page<ConexionServidor> findByRuc(String ruc, Pageable pageable) {
+	public List<ConexionServidor> findByRuc(String ruc) {
 		// TODO Auto-generated method stub
-		return conexionDao.findByRUC(ruc, pageable);
+		return conexionDao.findByRUC(ruc);
 	}
 	@Override
 	public List<ConexionServidor> findByIdEmpresa(long id) {

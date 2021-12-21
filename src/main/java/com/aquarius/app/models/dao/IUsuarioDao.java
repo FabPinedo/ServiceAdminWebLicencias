@@ -1,5 +1,7 @@
 package com.aquarius.app.models.dao;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +15,7 @@ public interface IUsuarioDao extends JpaRepository<MaeUsuario, String>{
 			+ "INNER JOIN CONTRATO_LICENCIA C ON B.COD_CONTRATO=C.ID\r\n"
 			+ "INNER JOIN LICENCIA_EMPRESA D ON D.ID=C.COD_EMPRESA\r\n"
 			+ " WHERE D.RAZON_SOCIAL like %:razonsocial%")
-	public Page<MaeUsuario> findByRazonsocial(@Param("razonsocial") String razonsocial,Pageable pageable);
+	public List<MaeUsuario> findByRazonsocial(@Param("razonsocial") String razonsocial);
 	
 	
 	@Query(nativeQuery = true, value= "SELECT * FROM MAE_USUARIO A \r\n"
@@ -21,13 +23,16 @@ public interface IUsuarioDao extends JpaRepository<MaeUsuario, String>{
 			+ "INNER JOIN CONTRATO_LICENCIA C ON B.COD_CONTRATO=C.ID\r\n"
 			+ "INNER JOIN LICENCIA_EMPRESA D ON D.ID=C.COD_EMPRESA\r\n"
 			+ "WHERE D.CODIGO_RUC LIKE %:ruc%")
-	public Page<MaeUsuario> findByRuc(@Param("ruc") String ruc,Pageable pageable);
+	public List<MaeUsuario> findByRuc(@Param("ruc") String ruc);
 	
 	
 	@Query(nativeQuery = true, value= "SELECT * FROM MAE_USUARIO A \r\n"
-			+ "INNER JOIN LICENCIAS_USUARIO_EMPRESA B  ON B.COD_USUARIO=A.COD_USUARIO \r\n"
 			+ "WHERE A.IND_BAJA =0")
-	public Page<MaeUsuario> findByEstado(Pageable pageable);
+	public List<MaeUsuario> findByEstado();
+	
+	@Query(nativeQuery = true, value= "SELECT * FROM MAE_USUARIO A \r\n"
+			+ "WHERE A.NOM_USUARIO LIKE %:usuario%")
+	public List<MaeUsuario> findByName(@Param("usuario") String usuario);
 	
 	@Query(nativeQuery = true, value= "SELECT * FROM MAE_USUARIO A \r\n"
 			+ "INNER JOIN LICENCIAS_USUARIO_EMPRESA B  ON B.COD_USUARIO=A.COD_USUARIO \r\n"

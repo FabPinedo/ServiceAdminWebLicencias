@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ import com.aquarius.app.models.service.ISistemaService;
 import com.aquarius.app.util.ConvertFecha;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("contrato")
 public class ContratoLicenciaController {
 	
@@ -72,6 +74,11 @@ public class ContratoLicenciaController {
 		
 	return licenciaService.findbyIDEmpresa(id);
 		}
+	@GetMapping("/find/listado/user/{user}")
+	public List<ContratoLicencia> findbyuser(@PathVariable String user) {
+		
+	return licenciaService.findbyUser(user);
+		}
 	
 	@GetMapping("/find/page/{page}")
 	public Page<ContratoLicencia> index(@PathVariable Integer page) {
@@ -79,7 +86,7 @@ public class ContratoLicenciaController {
 	return licenciaService.findAll(pageable);
 		}
 	
-	@GetMapping("/find/razonsocial/{razonsocial}/{page}")
+	/*@GetMapping("/find/razonsocial/{razonsocial}/{page}")
 	public Page<ContratoLicencia> findRazonSocial(@PathVariable String razonsocial, @PathVariable int page) {
 		Pageable pageable=PageRequest.of(page, 5);
 	return licenciaService.findByRazonsocial(razonsocial,pageable);
@@ -89,6 +96,15 @@ public class ContratoLicenciaController {
 	public Page<ContratoLicencia> findRuc(@PathVariable String ruc, @PathVariable int page) {
 		Pageable pageable=PageRequest.of(page, 5);
 	return licenciaService.findByRuc(ruc, pageable);
+		}*/
+	@GetMapping("/find/razonsocial/{razonsocial}")
+	public List<ContratoLicencia> findRazonSocial(@PathVariable String razonsocial) {
+	return licenciaService.findByRazonsocial(razonsocial);
+		}
+	
+	@GetMapping("/find/ruc/{ruc}")
+	public List<ContratoLicencia> findRuc(@PathVariable String ruc) {
+	return licenciaService.findByRuc(ruc);
 		}
 	
 	@GetMapping("find/codigo/{codigo}")

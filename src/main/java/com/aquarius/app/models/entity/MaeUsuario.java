@@ -36,13 +36,13 @@ public class MaeUsuario {
 	
 	@Column(name="sync_areas")
 	private Boolean syncareas;
-	
-	@Column(name="COD_CONTRATO", table="LICENCIAS_USUARIO_EMPRESA")
-	private Long codcontrato;
-	
+	/*
 	@Column(name="COD_EMPRESA", table="LICENCIAS_USUARIO_EMPRESA")
 	private Long codempresa;
 
+	@Column(name="COD_CONTRATO", table="LICENCIAS_USUARIO_EMPRESA")
+	private Long codcontrato;*/
+	
 	public String getUsuario() {
 		return usuario;
 	}
@@ -107,7 +107,7 @@ public class MaeUsuario {
 		this.syncareas = syncareas;
 	}
 
-	public Long getCodcontrato() {
+	/*public Long getCodcontrato() {
 		return codcontrato;
 	}
 
@@ -122,5 +122,5 @@ public class MaeUsuario {
 	public void setCodempresa(Long codempresa) {
 		this.codempresa = codempresa;
 	}
-	
+	*/
 }

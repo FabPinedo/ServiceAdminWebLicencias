@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,14 +24,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.aquarius.app.models.entity.MaeUsuario;
 import com.aquarius.app.models.entity.face.IUsuarioFace;
+import com.aquarius.app.models.service.IEmpresaService;
 import com.aquarius.app.models.service.IUsuarioService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/usuario")
 public class UsuarioController {
 	@Autowired
 	private IUsuarioService usuarioService;
-	
+	/*@Autowired
+	private IEmpresaService empresaService;*/
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -42,23 +46,25 @@ public class UsuarioController {
 	public MaeUsuario findbyUser( @PathVariable String user,@PathVariable String pass) {
 		return usuarioService.ValidarUsuario(user, pass);
 	}
-
-	@GetMapping("/find/ruc/{ruc}/{page}")
-	public Page<MaeUsuario> findRuc(@PathVariable String ruc, @PathVariable int page) {
-		Pageable pageable=PageRequest.of(page, 5);
-		return usuarioService.findByCodigoruc(ruc, pageable);
+	@GetMapping("/find/name/{name}")
+	public List<MaeUsuario> findName(@PathVariable String name ) {
+		
+		return usuarioService.findbyname(name);
+	}
+	@GetMapping("/find/ruc/{ruc}")
+	public List<MaeUsuario> findRuc(@PathVariable String ruc ) {
+		
+		return usuarioService.findByCodigoruc(ruc);
 	}
 	
-	@GetMapping("/find/razonsocial/{razonsocial}/{page}")
-	public Page<MaeUsuario> findRazonSocial(@PathVariable String razonsocial, @PathVariable int page) {
-		Pageable pageable=PageRequest.of(page, 5);
-		return usuarioService.findByRazonsocial(razonsocial,pageable);
+	@GetMapping("/find/razonsocial/{razonsocial}")
+	public List<MaeUsuario> findRazonSocial(@PathVariable String razonsocial) {
+		return usuarioService.findByRazonsocial(razonsocial);
 	}
 	
-	@GetMapping("/find/estado/page/{page}")
-	public Page<MaeUsuario> findbyEstado(@PathVariable int page) {
-		Pageable pageable=PageRequest.of(page, 5);
-		return usuarioService.findAllEstado(pageable);
+	@GetMapping("/find/estado")
+	public List<MaeUsuario> findbyEstado() {
+		return usuarioService.findAllEstado();
 	}
 	
 	@GetMapping("/find/page/{page}")
@@ -93,6 +99,7 @@ public class UsuarioController {
 		MaeUsuario usuarioNuevo= null;
 		Map<String,Object> respuesta= new HashMap<>();
 		try {
+			//usuario.setEmpresa(empresaService.findById(usuario.getCodempresa()));
 			usuarioNuevo=usuarioService.SaveUsuario(usuario);
 		} catch (DataAccessException e) {
 			// TODO: handle exception
@@ -138,8 +145,9 @@ public class UsuarioController {
 			usuarioActual.setPassword(usuario.getPassword());
 			usuarioActual.setEstado(usuario.getEstado());
 			usuarioActual.setPerfil(usuario.getPerfil());
-			usuarioActual.setCodempresa(usuario.getCodempresa());
-			usuarioActual.setCodcontrato(usuario.getCodcontrato());
+			//usuarioActual.setCodempresa(usuario.getCodempresa());
+			//usuarioActual.setEmpresa(empresaService.findById(usuario.getCodempresa()));
+			
 			//usuarioActual.setContrato(licenciaService.findById(usuario.getCodcontrato()));
 			usuarioActualizado=usuarioService.SaveUsuario(usuarioActual);
 		} catch (DataAccessException e) {

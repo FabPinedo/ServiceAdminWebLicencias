@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import com.aquarius.app.models.service.IConexionServidorService;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("conexion")
 public class ConexionServidorController {
 	@Autowired
@@ -47,16 +49,16 @@ public class ConexionServidorController {
 	return conexionService.findAll(pageable);
 		}
 	
-	@GetMapping("/find/razonsocial/{razonsocial}/{page}")
-	public Page<ConexionServidor> findRazonSocial(@PathVariable String razonsocial, @PathVariable int page) {
-		Pageable pageable=PageRequest.of(page, 5);
-	return conexionService.findByRazonsocial(razonsocial,pageable);
+	@GetMapping("/find/razonsocial/{razonsocial}")
+	public List<ConexionServidor> findRazonSocial(@PathVariable String razonsocial) {
+		
+	return conexionService.findByRazonsocial(razonsocial);
 		}
 	
-	@GetMapping("/find/ruc/{ruc}/{page}")
-	public Page<ConexionServidor> findRuc(@PathVariable String ruc, @PathVariable int page) {
-		Pageable pageable=PageRequest.of(page, 5);
-	return conexionService.findByRuc(ruc, pageable);
+	@GetMapping("/find/ruc/{ruc}")
+	public List<ConexionServidor> findRuc(@PathVariable String ruc) {
+		
+	return conexionService.findByRuc(ruc);
 		}
 	
 	

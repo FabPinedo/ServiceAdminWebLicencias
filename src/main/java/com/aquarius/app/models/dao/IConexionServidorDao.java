@@ -17,13 +17,13 @@ public interface IConexionServidorDao extends JpaRepository<ConexionServidor, Lo
 			+ "INNER JOIN LICENCIA_EMPRESA B "
 			+ "ON B.ID=A.COD_EMPRESA "
 			+ "WHERE B.RAZON_SOCIAL LIKE %:razonsocial%")
-	public Page<ConexionServidor> findByRazonsocial(@Param("razonsocial") String razonsocial,Pageable pageable);
+	public List<ConexionServidor> findByRazonsocial(@Param("razonsocial") String razonsocial);
 	@Query(nativeQuery = true, value= "SELECT A.*"
 			+ " FROM LICENCIA_CONEXION_SERVIDOR A "
 			+ "INNER JOIN LICENCIA_EMPRESA B "
 			+ "ON B.ID=A.COD_EMPRESA "
 			+ "WHERE B.CODIGO_RUC LIKE %:ruc%")
-	public Page<ConexionServidor> findByRUC(@Param("ruc") String ruc,Pageable pageable);
+	public List<ConexionServidor> findByRUC(@Param("ruc") String ruc);
 	@Query(nativeQuery = true, value= "SELECT A.*"
 			+ " FROM LICENCIA_CONEXION_SERVIDOR A "
 			+ "INNER JOIN LICENCIA_EMPRESA B "

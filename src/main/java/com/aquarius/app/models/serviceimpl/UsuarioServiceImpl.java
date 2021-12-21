@@ -34,15 +34,15 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	}
 
 	@Override
-	public Page<MaeUsuario> findByCodigoruc(String ruc, Pageable pageable) {
+	public List<MaeUsuario> findByCodigoruc(String ruc) {
 		// TODO Auto-generated method stub
-		return userDao.findByRuc(ruc, pageable);
+		return userDao.findByRuc(ruc);
 	}
 
 	@Override
-	public Page<MaeUsuario> findByRazonsocial(String razonsocial, Pageable pageable) {
+	public List<MaeUsuario> findByRazonsocial(String razonsocial) {
 		// TODO Auto-generated method stub
-		return userDao.findByRazonsocial(razonsocial, pageable);
+		return userDao.findByRazonsocial(razonsocial);
 	}
 
 	@Override
@@ -52,9 +52,9 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	}
 
 	@Override
-	public Page<MaeUsuario> findAllEstado(Pageable pageable) {
+	public List<MaeUsuario> findAllEstado() {
 		// TODO Auto-generated method stub
-		return userDao.findByEstado(pageable);
+		return userDao.findByEstado();
 	}
 
 	@Override
@@ -126,6 +126,12 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	public int findCountUsuario(String usuario) {
 		// TODO Auto-generated method stub
 		return usuarioDao.findCountUsuario(usuario);
+	}
+
+	@Override
+	public List<MaeUsuario> findbyname(String usuario) {
+		// TODO Auto-generated method stub
+		return userDao.findByName(usuario);
 	}
 
 	

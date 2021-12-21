@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 
 import com.aquarius.app.models.entity.ContratoLicencia;
+import com.aquarius.app.models.entity.MaeUsuario;
 
 
 
@@ -20,14 +21,20 @@ public interface IContratoLicenciaDao extends JpaRepository<ContratoLicencia, Lo
 			+ "INNER JOIN LICENCIA_EMPRESA B "
 			+ "ON B.ID=A.COD_EMPRESA "
 			+ "WHERE B.RAZON_SOCIAL LIKE %:razonsocial%")
-	public Page<ContratoLicencia> findByRazonsocial(@Param("razonsocial") String razonsocial,Pageable pageable);
+	public List<ContratoLicencia> findByRazonsocial(@Param("razonsocial") String razonsocial);
 	
 	@Query(nativeQuery = true, value= "SELECT A.*"
 			+ " FROM CONTRATO_LICENCIA A "
 			+ "INNER JOIN LICENCIA_EMPRESA B "
 			+ "ON B.ID=A.COD_EMPRESA "
 			+ "WHERE B.CODIGO_RUC LIKE %:ruc%")
-	public Page<ContratoLicencia> findByRUC(@Param("ruc") String ruc,Pageable pageable);
+	public List<ContratoLicencia> findByRUC(@Param("ruc") String ruc);
+	
+	@Query(nativeQuery = true, value= "SELECT A.ID,A.COD_SISTEMA,A.COD_EMPRESA,A.COD_CONEXION,A.FECHA_INI_CONTRATO,A.FECHA_FIN_CONTRATO,A.CANT_USUARIOS,A.CANT_ACTIVOS,A.ESTADO,A.TOKEN FROM CONTRATO_LICENCIA A \r\n"
+			+ "INNER JOIN LICENCIAS_USUARIO_EMPRESA B  ON B.COD_CONTRATO=A.ID  \r\n"
+			+ "INNER JOIN MAE_USUARIO C ON B.COD_USUARIO=C.COD_USUARIO\r\n"
+			+"WHERE C.COD_USUARIO=:usuario")
+	public List<ContratoLicencia> findbyUser(@Param("usuario") String usuario);
 	
 	@Query(nativeQuery = true, value= "SELECT * FROM CONTRATO_LICENCIA A WHERE A.TOKEN = :token")
 	public ContratoLicencia findByCodigo(@Param("token") String token);

@@ -19,7 +19,7 @@ public interface IConexionServidorService {
 
 	public ConexionServidor findById(long id);
 	public Page<ConexionServidor> findAll(Pageable pageable);
-	public Page<ConexionServidor> findByRazonsocial(String razonsocial,Pageable pageable);
-	public Page<ConexionServidor> findByRuc(String ruc,Pageable pageable);
+	public List<ConexionServidor> findByRazonsocial(String razonsocial);
+	public List<ConexionServidor> findByRuc(String ruc);
 	public List<ConexionServidor>findByIdEmpresa(long id);
 }

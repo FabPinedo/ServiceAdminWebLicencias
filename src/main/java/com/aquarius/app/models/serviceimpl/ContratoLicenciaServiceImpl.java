@@ -87,14 +87,14 @@ public class ContratoLicenciaServiceImpl implements IContratoLicenciaService{
 		return licenciaDao.findByEstado(pageable);
 	}
 	@Override
-	public Page<ContratoLicencia> findByRazonsocial(String razonsocial, Pageable pageable) {
+	public List<ContratoLicencia> findByRazonsocial(String razonsocial) {
 		// TODO Auto-generated method stub
-		return licenciaDao.findByRazonsocial(razonsocial, pageable);
+		return licenciaDao.findByRazonsocial(razonsocial);
 	}
 	@Override
-	public Page<ContratoLicencia> findByRuc(String ruc, Pageable pageable) {
+	public List<ContratoLicencia> findByRuc(String ruc) {
 		// TODO Auto-generated method stub
-		return licenciaDao.findByRUC(ruc, pageable);
+		return licenciaDao.findByRUC(ruc);
 	}
 	@Override
 	public List<ContratoLicencia> ListadoActivos() {
@@ -105,6 +105,11 @@ public class ContratoLicenciaServiceImpl implements IContratoLicenciaService{
 	public List<ContratoLicencia> findbyIDEmpresa(Long id) {
 		// TODO Auto-generated method stub
 		return licenciaDao.findbyIDEmpresa(id);
+	}
+	@Override
+	public List<ContratoLicencia> findbyUser(String usuario) {
+		// TODO Auto-generated method stub
+		return licenciaDao.findbyUser(usuario);
 	}
 
 	

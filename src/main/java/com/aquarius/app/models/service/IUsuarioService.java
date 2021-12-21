@@ -9,13 +9,14 @@ import com.aquarius.app.models.entity.face.IUsuarioFace;
 
 public interface IUsuarioService {
 	public List<MaeUsuario> findAll();
+	public List<MaeUsuario> findbyname(String usuario);
 	public MaeUsuario SaveUsuario(MaeUsuario usuario);
 	public void deleteUsuario(String codusuario);
 	public MaeUsuario findById(String codusuario);
-	public Page<MaeUsuario> findByCodigoruc(String ruc,Pageable pageable);
-	public Page<MaeUsuario> findByRazonsocial(String razonsocial,Pageable pageable);
+	public List<MaeUsuario> findByCodigoruc(String ruc);
+	public List<MaeUsuario> findByRazonsocial(String razonsocial);
 	public Page<MaeUsuario> findAll(Pageable pageable);
-	public Page<MaeUsuario> findAllEstado(Pageable pageable);
+	public List<MaeUsuario> findAllEstado();
 	public MaeUsuario ValidarUsuario(String user,String pass);
 	
 	public Boolean save(MaeUsuario usuario);
