@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,18 +31,21 @@ import com.aquarius.app.models.service.ISistemaService;
 import com.aquarius.app.util.ConvertFecha;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("contrato")
 public class ContratoLicenciaController {
 	
 	@Autowired
 	private IContratoLicenciaService licenciaService;
+	
 	@Autowired
 	private IEmpresaService empresaService;
+	
 	@Autowired
 	private IConexionServidorService conexionService;
+	
 	@Autowired
 	private ISistemaService sistemaService;
+	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
@@ -57,34 +59,35 @@ public class ContratoLicenciaController {
 
 	@GetMapping("/find/listado")
 	public List<ContratoLicencia> index() {
-		
-	return licenciaService.findAll();
-		}
+		return licenciaService.findAll();
+	}
+	
 	@GetMapping("/find/listado/activos")
 	public List<ContratoLicencia> ListadoActivos() {
-	return licenciaService.ListadoActivos();
-		}
+		return licenciaService.ListadoActivos();
+	}
+	
 	@GetMapping("/find/estado/page/{page}")
 	public Page<ContratoLicencia> findbyEstado(@PathVariable int page) {
 		Pageable pageable=PageRequest.of(page, 5);
-	return licenciaService.findAllByEstado(pageable);
-		}
+		return licenciaService.findAllByEstado(pageable);
+	}
+	
 	@GetMapping("/find/listado/codempresa/{id}")
-	public List<ContratoLicencia> findbyIDEmpresa(@PathVariable Long id) {
-		
-	return licenciaService.findbyIDEmpresa(id);
-		}
+	public List<ContratoLicencia> findbyIDEmpresa(@PathVariable Long id) {		
+		return licenciaService.findbyIDEmpresa(id);
+	}
+	
 	@GetMapping("/find/listado/user/{user}")
 	public List<ContratoLicencia> findbyuser(@PathVariable String user) {
-		
-	return licenciaService.findbyUser(user);
-		}
+		return licenciaService.findbyUser(user);
+	}
 	
 	@GetMapping("/find/page/{page}")
 	public Page<ContratoLicencia> index(@PathVariable Integer page) {
 		Pageable pageable=PageRequest.of(page, 5);
-	return licenciaService.findAll(pageable);
-		}
+		return licenciaService.findAll(pageable);
+	}
 	
 	/*@GetMapping("/find/razonsocial/{razonsocial}/{page}")
 	public Page<ContratoLicencia> findRazonSocial(@PathVariable String razonsocial, @PathVariable int page) {
@@ -97,19 +100,19 @@ public class ContratoLicenciaController {
 		Pageable pageable=PageRequest.of(page, 5);
 	return licenciaService.findByRuc(ruc, pageable);
 		}*/
+	
 	@GetMapping("/find/razonsocial/{razonsocial}")
 	public List<ContratoLicencia> findRazonSocial(@PathVariable String razonsocial) {
-	return licenciaService.findByRazonsocial(razonsocial);
-		}
+		return licenciaService.findByRazonsocial(razonsocial);
+	}
 	
 	@GetMapping("/find/ruc/{ruc}")
 	public List<ContratoLicencia> findRuc(@PathVariable String ruc) {
-	return licenciaService.findByRuc(ruc);
-		}
+		return licenciaService.findByRuc(ruc);
+	}
 	
 	@GetMapping("find/codigo/{codigo}")
 	public ResponseEntity<byte[]> findByCodigo(@PathVariable String codigo) {
-		
 		String licenciaJson = licenciaService.exportJSONfindByCodigo(codigo);
 		byte[] customerJsonBytes = licenciaJson.getBytes();
 		
@@ -121,14 +124,12 @@ public class ContratoLicenciaController {
 				.body(customerJsonBytes);
 	}
 	
-	
 	@GetMapping("find/id/{id}")
 	public ResponseEntity<?> findById(@PathVariable Long id) {
 		ContratoLicencia licencia= null;
 		Map<String,Object> respuesta= new HashMap<>();
 		try {
 			 licencia=licenciaService.findById(id);
-			
 		} catch (DataAccessException e) {
 			// TODO: handle exception
 			respuesta.put("Mensaje","Error al realizar la busqueda de datos");
@@ -139,9 +140,8 @@ public class ContratoLicenciaController {
 			respuesta.put("Mensaje","La licencia de ID: ".concat(Long.toString(id).concat("  No existe en la base de datos")));
 			return new ResponseEntity<Map<String,Object>>(respuesta,HttpStatus.NOT_FOUND);		
 		}
-	
-	return new ResponseEntity<ContratoLicencia>(licencia, HttpStatus.OK);
-		}
+		return new ResponseEntity<ContratoLicencia>(licencia, HttpStatus.OK);
+	}
 	
 	@GetMapping("find/estado/codigo/{codigo}")
 	public Boolean estadoLicencia(@PathVariable String codigo) {
@@ -201,7 +201,7 @@ public class ContratoLicenciaController {
 		respuesta.put("Licencia", licencianueva);
 		
 		return new ResponseEntity<Map<String,Object>>(respuesta,HttpStatus.CREATED);
-		}
+	}
 		
 	@PutMapping("/find/id/{id}")
 	public ResponseEntity<?> updateContrato(@RequestBody ContratoLicencia contrato,@PathVariable long id) {
@@ -243,12 +243,6 @@ public class ContratoLicenciaController {
 		respuesta.put("Licencia", licenciaActualizada);
 		
 		return new ResponseEntity<Map<String,Object>>(respuesta,HttpStatus.CREATED);
-	
-}
+	}
 
-		
-		
-		
-	
-	
 }

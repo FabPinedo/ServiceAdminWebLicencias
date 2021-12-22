@@ -6,14 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
 import org.springframework.data.repository.query.Param;
-
-
 import com.aquarius.app.models.entity.ContratoLicencia;
-import com.aquarius.app.models.entity.MaeUsuario;
-
-
 
 public interface IContratoLicenciaDao extends JpaRepository<ContratoLicencia, Long>{
 	@Query(nativeQuery = true, value= "SELECT A.*"
