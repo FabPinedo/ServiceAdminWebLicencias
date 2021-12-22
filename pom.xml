@@ -90,7 +90,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>licencias</finalName>
+		<finalName>service-admin-licencia</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
