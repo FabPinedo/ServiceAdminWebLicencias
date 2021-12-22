@@ -27,7 +27,7 @@ public interface IUsuarioDao extends JpaRepository<MaeUsuario, String>{
 	
 	
 	@Query(nativeQuery = true, value= "SELECT * FROM MAE_USUARIO A \r\n"
-			+ "WHERE A.IND_BAJA =0")
+			+ "WHERE A.IND_BAJA =1")
 	public List<MaeUsuario> findByEstado();
 	
 	@Query(nativeQuery = true, value= "SELECT * FROM MAE_USUARIO A \r\n"
