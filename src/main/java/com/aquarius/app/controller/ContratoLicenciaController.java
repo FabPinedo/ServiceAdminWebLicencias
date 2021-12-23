@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.aquarius.app.models.entity.ContratoLicencia;
@@ -116,6 +117,19 @@ public class ContratoLicenciaController {
 		String licenciaJson = licenciaService.exportJSONfindByCodigo(codigo);
 		byte[] customerJsonBytes = licenciaJson.getBytes();
 		
+		return ResponseEntity
+				.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=aquariuskey.json")
+				.contentType(MediaType.APPLICATION_JSON)
+				.contentLength(customerJsonBytes.length)
+				.body(customerJsonBytes);
+	}
+	
+	@PostMapping("get/json")
+	@ResponseBody
+	public ResponseEntity<byte[]> save(@RequestBody ContratoLicencia entity) {
+		String licenciaJson = licenciaService.exportJSONfindByCodigo(entity.getToken());
+		byte[] customerJsonBytes = licenciaJson.getBytes();
 		return ResponseEntity
 				.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=aquariuskey.json")
