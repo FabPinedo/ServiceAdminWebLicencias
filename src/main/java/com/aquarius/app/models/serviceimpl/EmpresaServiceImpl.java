@@ -90,6 +90,18 @@ public class EmpresaServiceImpl implements IEmpresaService {
 		return empresaDao.ListadoActivos();
 	}
 
+	@Override
+	public List<Empresa> findListadoRazonsocialActivos(String razon) {
+		// TODO Auto-generated method stub
+		return empresaDao.findByRazonsocialListadoActivos(razon);
+	}
+
+	@Override
+	public List<Empresa> findListadoRucActivos(String ruc) {
+		// TODO Auto-generated method stub
+		return empresaDao.findByRucListadoActivos(ruc);
+	}
+
 	
 
 	

@@ -13,6 +13,7 @@ import com.aquarius.app.models.entity.ContratoLicencia;
 public interface IContratoLicenciaService {
 	
 	public ContratoLicencia findById(Long id);
+	public ContratoLicencia findBySistemaEmpresa(Long empresa,Long sistema);
 	public String exportJSONfindByCodigo(String token);
 	public ContratoLicencia findByCodigo(String token);
 	public String generateToken();

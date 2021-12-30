@@ -111,6 +111,11 @@ public class ContratoLicenciaServiceImpl implements IContratoLicenciaService{
 		// TODO Auto-generated method stub
 		return licenciaDao.findbyUser(usuario);
 	}
+	@Override
+	public ContratoLicencia findBySistemaEmpresa(Long empresa, Long sistema) {
+		// TODO Auto-generated method stub
+		return licenciaDao.findBySistemaEmpresa(empresa, sistema);
+	}
 
 	
 

@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import com.aquarius.app.models.entity.Empresa;
 import com.aquarius.app.models.service.IEmpresaService;
 
 @RestController
+@CrossOrigin(origins="http://localhost:4200" )
 @RequestMapping("/empresa")
 public class EmpresaController {
 	@Autowired
@@ -45,6 +47,14 @@ public class EmpresaController {
 	@GetMapping("/find/listado/razon/{razon}")
 	public List<Empresa> ListaRazon(@PathVariable String razon) {
 	return empresaService.findListadoRazonsocial(razon);
+		}
+	@GetMapping("/find/listado/activos/ruc/{ruc}")
+	public List<Empresa> ListaRucActivos( @PathVariable String ruc) {
+	return empresaService.findListadoRucActivos(ruc);
+		}
+	@GetMapping("/find/listado/activos/razon/{razon}")
+	public List<Empresa> ListaRazonActivos(@PathVariable String razon) {
+	return empresaService.findListadoRazonsocialActivos(razon);
 		}
 	@GetMapping("/find/ruc/{ruc}/{page}")
 	public Page<Empresa> findRuc(@PathVariable String ruc, @PathVariable int page) {

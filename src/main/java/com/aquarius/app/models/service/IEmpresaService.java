@@ -26,5 +26,7 @@ public interface IEmpresaService {
 	public Page<Empresa> findAllEstado(Pageable pageable);
 	public List<Empresa> findListadoRazonsocial(String razon);
 	public List<Empresa> findListadoRuc(String ruc);
+	public List<Empresa> findListadoRazonsocialActivos(String razon);
+	public List<Empresa> findListadoRucActivos(String ruc);
 	public List<Empresa> ListadoActivos();
 }

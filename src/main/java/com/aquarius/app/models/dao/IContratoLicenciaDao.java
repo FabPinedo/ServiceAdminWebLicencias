@@ -24,6 +24,12 @@ public interface IContratoLicenciaDao extends JpaRepository<ContratoLicencia, Lo
 			+ "WHERE B.CODIGO_RUC LIKE %:ruc%")
 	public List<ContratoLicencia> findByRUC(@Param("ruc") String ruc);
 	
+	@Query(nativeQuery = true, value= "SELECT *"
+			+ " FROM CONTRATO_LICENCIA A "
+			+ "WHERE A.COD_EMPRESA=:empresa AND A.COD_SISTEMA=:sistema")
+	public ContratoLicencia findBySistemaEmpresa(@Param("empresa") Long empresa,@Param("sistema") Long sistema);
+	
+	
 	@Query(nativeQuery = true, value= "SELECT A.ID,A.COD_SISTEMA,A.COD_EMPRESA,A.COD_CONEXION,A.FECHA_INI_CONTRATO,A.FECHA_FIN_CONTRATO,A.CANT_USUARIOS,A.CANT_ACTIVOS,A.ESTADO,A.TOKEN FROM CONTRATO_LICENCIA A \r\n"
 			+ "INNER JOIN LICENCIAS_USUARIO_EMPRESA B  ON B.COD_CONTRATO=A.ID  \r\n"
 			+ "INNER JOIN MAE_USUARIO C ON B.COD_USUARIO=C.COD_USUARIO\r\n"

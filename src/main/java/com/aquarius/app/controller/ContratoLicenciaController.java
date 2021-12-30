@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ import com.aquarius.app.models.service.ISistemaService;
 import com.aquarius.app.util.ConvertFecha;
 
 @RestController
+@CrossOrigin(origins="http://localhost:4200" )
 @RequestMapping("contrato")
 public class ContratoLicenciaController {
 	
@@ -76,6 +78,11 @@ public class ContratoLicenciaController {
 	@GetMapping("/find/listado/codempresa/{id}")
 	public List<ContratoLicencia> findbyIDEmpresa(@PathVariable Long id) {		
 		return licenciaService.findbyIDEmpresa(id);
+	}
+	
+	@GetMapping("/find/codempresa/{empresa}/codsistema/{sistema}")
+	public ContratoLicencia findbyEmpresaSistema(@PathVariable Long empresa,@PathVariable Long sistema) {		
+		return licenciaService.findBySistemaEmpresa(empresa,sistema);
 	}
 	
 	@GetMapping("/find/listado/user/{user}")
@@ -224,7 +231,7 @@ public class ContratoLicenciaController {
 			contratoActual.setCodconexion(contrato.getCodconexion());
 			contratoActual.setConexion(conexionService.findById(contrato.getCodconexion()));
 			
-			codigo = sigla + contrato.getEmpresa().getId() + contrato.getSistema().getId() + util.getFechaActualConcat();
+			codigo = sigla + contratoActual.getEmpresa().getId() + contratoActual.getSistema().getId() + util.getFechaActualConcat();
 			contratoActual.setToken(passwordEncoder.encode(codigo));
 			
 			contratoActual.setEstado(contrato.getEstado());
