@@ -35,6 +35,12 @@ public class Empresa {
 	
 	@Column(name="fecha_baja")
 	private Date fechabaja;
+	
+	@Column(name="fec_creacion")
+	private Date feccreacion;
+	
+	@Column(name="principal")
+	private Boolean principal;
 
 	public Long getId() {
 		return id;
@@ -92,4 +98,22 @@ public class Empresa {
 		this.fechabaja = fechabaja;
 	}
 
+	public Date getFeccreacion() {
+		return feccreacion;
+	}
+
+	public void setFeccreacion(Date feccreacion) {
+		this.feccreacion = feccreacion;
+	}
+
+	public Boolean getPrincipal() {
+		return principal;
+	}
+
+	public void setPrincipal(Boolean principal) {
+		this.principal = principal;
+	}
+
+	
+	
 }
