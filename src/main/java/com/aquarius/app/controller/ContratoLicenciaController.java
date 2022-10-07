@@ -33,8 +33,8 @@ import com.aquarius.app.models.service.ISistemaService;
 import com.aquarius.app.util.ConvertFecha;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200" )
-@RequestMapping("contrato")
+//@CrossOrigin(origins="http://localhost:4200" )
+@RequestMapping("/contrato")
 public class ContratoLicenciaController {
 	
 	@Autowired

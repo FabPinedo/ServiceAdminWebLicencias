@@ -14,7 +14,7 @@ import com.aquarius.app.models.entity.MaeAccesosRes;
 import com.aquarius.app.models.service.IMaeAccesosResService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200" )
+//@CrossOrigin(origins="http://localhost:4200" )
 @RequestMapping("/acceso")
 public class MaeAccesoResController {
 

@@ -1,5 +1,4 @@
 package com.aquarius.app.controller;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +26,9 @@ import com.aquarius.app.models.service.IConexionServidorService;
 
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200" )
+//@CrossOrigin(origins="http://localhost:4200" )
 @RequestMapping("conexion")
-public class ConexionServidorController {
-	
+class ConexionServidorController {
 	@Autowired
 	private IConexionServidorService conexionService;
 	
@@ -135,6 +133,7 @@ public class ConexionServidorController {
 			conexionActual.setTomcatcontra(conexion.getTomcatcontra());
 			conexionActual.setWeburl(conexion.getWeburl());
 			conexionActual.setCodempresa(conexion.getCodempresa());
+			conexionActual.setDireccionservicio(conexion.getDireccionservicio());
 			conexionActual.setEmpresa(conexion.getEmpresa());
 			conexionActualizada=conexionService.SaveConexionServidor(conexionActual);
 		} catch (DataAccessException e) {
@@ -147,5 +146,4 @@ public class ConexionServidorController {
 		respuesta.put("Conexion", conexionActualizada);
 		return new ResponseEntity<Map<String,Object>>(respuesta,HttpStatus.CREATED);
 	}
-
 }

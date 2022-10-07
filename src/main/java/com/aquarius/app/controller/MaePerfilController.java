@@ -15,7 +15,7 @@ import com.aquarius.app.models.entity.MaePerfil;
 import com.aquarius.app.models.service.IMaePerfilService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200" )
+//@CrossOrigin(origins="http://localhost:4200" )
 @RequestMapping("/perfil")
 public class MaePerfilController {
 	

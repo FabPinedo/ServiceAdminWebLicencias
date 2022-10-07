@@ -15,7 +15,7 @@ import com.aquarius.app.models.entity.MaePerfilGrupoFuncion;
 import com.aquarius.app.models.service.IMaePerfilGrupoFuncionService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200" )
+//@CrossOrigin(origins="http://localhost:4200" )
 @RequestMapping("perfilgrupofuncion")
 public class MaePerfilGrupoFuncionController {
 

@@ -37,7 +37,7 @@ public class SedeServiceImpl implements ISedeService {
 	@Override
 	public Sede findById(String codsede) {
 		// TODO Auto-generated method stub
-		return sedeDao.getById(codsede);
+		return sedeDao.findById(codsede).orElse(null);
 	}
 
 	@Override

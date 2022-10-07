@@ -22,8 +22,8 @@ import com.aquarius.app.models.entity.Sistema;
 import com.aquarius.app.models.service.ISedeService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200" )
-@RequestMapping("sede")
+//@CrossOrigin(origins="http://localhost:4200" )
+@RequestMapping("/sede")
 public class SedeController {
 	@Autowired
 	private ISedeService sedeService;

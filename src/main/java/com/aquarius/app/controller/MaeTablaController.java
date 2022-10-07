@@ -17,8 +17,8 @@ import com.aquarius.app.models.service.IMaeTablaService;
 
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200" )
-@RequestMapping("tabla")
+//@CrossOrigin(origins="http://localhost:4200" )
+@RequestMapping("/tabla")
 public class MaeTablaController {
 	@Autowired
 	private IMaeTablaService tablaService;

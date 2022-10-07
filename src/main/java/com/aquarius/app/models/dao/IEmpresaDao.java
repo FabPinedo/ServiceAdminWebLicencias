@@ -34,6 +34,7 @@ public interface IEmpresaDao extends JpaRepository<Empresa, Long> {
 	//
 	@Query(nativeQuery = true, value= "SELECT * FROM LICENCIA_EMPRESA A WHERE A.IND_BAJA =0")
 	public Page< Empresa> findByEstado(Pageable pageable);
+	
 	@Query(nativeQuery = true, value= "SELECT * FROM LICENCIA_EMPRESA A WHERE A.IND_BAJA =0")
 	public List< Empresa> ListadoActivos();
 	

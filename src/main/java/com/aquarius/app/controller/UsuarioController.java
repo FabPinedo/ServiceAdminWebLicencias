@@ -22,16 +22,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.aquarius.app.models.entity.ContratoLicencia;
+import com.aquarius.app.models.entity.LicenciasUsuarioEmpresa;
 import com.aquarius.app.models.entity.MaeUsuario;
 import com.aquarius.app.models.entity.face.IUsuarioFace;
+import com.aquarius.app.models.service.IContratoLicenciaService;
+import com.aquarius.app.models.service.ILicenciasUsuarioEmpresaService;
 import com.aquarius.app.models.service.IUsuarioService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200" )
+//@CrossOrigin(origins="http://localhost:4200" )
 @RequestMapping("/usuario")
 public class UsuarioController {
 	@Autowired
 	private IUsuarioService usuarioService;
+	
+	@Autowired
+	private IContratoLicenciaService contratoservice;
+	@Autowired
+	private ILicenciasUsuarioEmpresaService relacionservice;
 	/*@Autowired
 	private IEmpresaService empresaService;*/
 	@Autowired
@@ -92,6 +102,23 @@ public class UsuarioController {
 	
 		return new ResponseEntity<MaeUsuario>(usuario, HttpStatus.OK);
 	}
+	@GetMapping("/sitia/find/all/{id}")
+	public ResponseEntity<?> findallsitia(@PathVariable String id){
+		List<MaeUsuario> usuario= null;
+		Map<String,Object> respuesta= new HashMap<>();
+		try {
+			 usuario=usuarioService.findallSitia(id);
+			
+		}catch (DataAccessException e) {
+			// TODO: handle exception
+			respuesta.put("Mensaje","Error al realizar la busqueda de datos");
+			respuesta.put("error",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String,Object>>(respuesta,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	
+		return new ResponseEntity<List<MaeUsuario>>(usuario, HttpStatus.OK);
+	}
 	
 	@PostMapping("/post")
 	public ResponseEntity<?> addEmpresa(@RequestBody MaeUsuario usuario) {
@@ -99,6 +126,13 @@ public class UsuarioController {
 		Map<String,Object> respuesta= new HashMap<>();
 		try {
 			//usuario.setEmpresa(empresaService.findById(usuario.getCodempresa()));
+			if(usuario.getPassword() != null && usuario.getPassword() != "") {
+				String password = passwordEncoder.encode(usuario.getPassword());
+				usuario.setPassword(password);	
+			}else {
+				MaeUsuario user = usuarioService.findByUsuario(usuario.getUsuario());
+				usuario.setPassword(user.getPassword());
+			}
 			usuarioNuevo=usuarioService.SaveUsuario(usuario);
 		} catch (DataAccessException e) {
 			// TODO: handle exception
@@ -112,11 +146,49 @@ public class UsuarioController {
 		return new ResponseEntity<Map<String,Object>>(respuesta,HttpStatus.CREATED);
 	}
 	
+	@PostMapping("/post/sitia/{id}")
+	public ResponseEntity<?> adduser(@RequestBody MaeUsuario usuario,@PathVariable String id) {
+		MaeUsuario usuarioNuevo= null;
+		LicenciasUsuarioEmpresa relacionnueva=null;
+		Map<String,Object> respuesta= new HashMap<>();
+		try {
+			MaeUsuario user = usuarioService.findByUsuario(usuario.getUsuario());
+			if(usuario.getPassword() != null && usuario.getPassword() != "") {
+				String password = passwordEncoder.encode(usuario.getPassword());
+				usuario.setPassword(password);
+			}else {
+				
+				usuario.setPassword(user.getPassword());
+			}
+			usuarioNuevo=usuarioService.SaveUsuario(usuario);
+			
+				ContratoLicencia contrato=contratoservice.findById(Long.parseLong(id));
+				relacionnueva=new LicenciasUsuarioEmpresa();
+				relacionnueva.setCodcontrato(contrato.getId());
+				relacionnueva.setCodempresa(contrato.getCodempresa());
+				relacionnueva.setCodusuario(usuario.getUsuario());
+				relacionservice.SaveLicenciasUsuarioEmpresa(relacionnueva);
+			
+			
+			
+			
+		} catch (DataAccessException e) {
+			// TODO: handle exception
+			respuesta.put("Mensaje","Error al realizar el insert en base de datos");
+			respuesta.put("error",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String,Object>>(respuesta,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		respuesta.put("Mensaje","Se ha creado con Exito el nuevo usuario");
+		respuesta.put("Empresa", usuarioNuevo);
+		
+		return new ResponseEntity<Map<String,Object>>(respuesta,HttpStatus.CREATED);
+	}
 	
 	@DeleteMapping(value="/find/codusuario/{codusuario}")
 	public ResponseEntity<?> eliminar(@PathVariable("codusuario") String codusuario) {
 		Map<String,Object> respuesta= new HashMap<>();
 		try {
+			relacionservice.deleteObjeto(codusuario);
 			usuarioService.deleteUsuario(codusuario);
 		} catch (DataAccessException e) {
 			// TODO: handle exception
@@ -148,6 +220,14 @@ public class UsuarioController {
 			//usuarioActual.setEmpresa(empresaService.findById(usuario.getCodempresa()));
 			
 			//usuarioActual.setContrato(licenciaService.findById(usuario.getCodcontrato()));
+			
+			if(usuario.getPassword() != null && usuario.getPassword() != "") {
+				String password = passwordEncoder.encode(usuario.getPassword());
+				usuarioActual.setPassword(password);	
+			}else {
+				MaeUsuario user = usuarioService.findByUsuario(usuario.getUsuario());
+				usuarioActual.setPassword(user.getPassword());
+			}
 			usuarioActualizado=usuarioService.SaveUsuario(usuarioActual);
 		} catch (DataAccessException e) {
 			// TODO: handle exception

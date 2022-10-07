@@ -134,6 +134,12 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		return userDao.findByName(usuario);
 	}
 
+	@Override
+	public List<MaeUsuario> findallSitia(String codcontrato) {
+		// TODO Auto-generated method stub
+		return userDao.getusuarisitia(codcontrato);
+	}
+
 	
 
 }

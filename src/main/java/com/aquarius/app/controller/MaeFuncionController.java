@@ -16,7 +16,7 @@ import com.aquarius.app.models.service.IMaeFuncionGrupoService;
 import com.aquarius.app.models.service.IMaeFuncionService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200" )
+//@CrossOrigin(origins="http://localhost:4200" )
 @RequestMapping("/funcion")
 public class MaeFuncionController {
 	

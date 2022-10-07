@@ -26,8 +26,8 @@ import com.aquarius.app.models.entity.Sistema;
 import com.aquarius.app.models.service.ISistemaService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200" )
-@RequestMapping("sistema")
+//@CrossOrigin(origins="http://localhost:4200" )
+@RequestMapping("/sistema")
 public class SistemaController {
 	@Autowired
 	private ISistemaService sistemaService;

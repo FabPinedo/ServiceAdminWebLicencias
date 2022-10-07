@@ -41,9 +41,15 @@ public class LicenciasUsuarioEmpresaServiceImpl implements ILicenciasUsuarioEmpr
 	}
 
 	@Override
-	public void deleteObjeto(String codusuario, Long id) {
+	public void deleteObjeto(String codusuario) {
 		// TODO Auto-generated method stub
-		 userEmpresaDao.deleteByidAndUser(codusuario, id);
+		 userEmpresaDao.deleteByidAndUser(codusuario);
+	}
+
+	@Override
+	public List<LicenciasUsuarioEmpresa> findcant(String contrato) {
+		// TODO Auto-generated method stub
+		return userEmpresaDao.findcant(contrato);
 	}
 
 }

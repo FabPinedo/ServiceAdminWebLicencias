@@ -38,4 +38,9 @@ public interface IUsuarioDao extends JpaRepository<MaeUsuario, String>{
 			+"WHERE A.COD_USUARIO=:usuario AND A.DES_PASSWORD=:pass ")
 	public MaeUsuario validarUser(@Param("usuario") String usuario,@Param("pass") String pass);
 	
+	@Query(nativeQuery = true, value= "SELECT A.* FROM MAE_USUARIO A "
+			+ "INNER JOIN LICENCIAS_USUARIO_EMPRESA B ON B.COD_USUARIO=A.COD_USUARIO "
+			+ "  WHERE B.COD_CONTRATO=:codcontrato")
+	public List<MaeUsuario> getusuarisitia(@Param("codcontrato") String codcontrato);
+
 }

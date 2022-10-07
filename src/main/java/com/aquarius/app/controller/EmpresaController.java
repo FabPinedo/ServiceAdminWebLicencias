@@ -26,15 +26,31 @@ import com.aquarius.app.models.entity.Empresa;
 import com.aquarius.app.models.service.IEmpresaService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200" )
+//@CrossOrigin(origins="http://localhost:4200" )
 @RequestMapping("/empresa")
 public class EmpresaController {
 	@Autowired
 	private IEmpresaService empresaService;
 	
 	@GetMapping("/find/listado")
-	public List<Empresa> index() {
-	return empresaService.findAll();
+	public ResponseEntity<?> index() {
+		List<Empresa> empresa= null;
+		Map<String,Object> respuesta= new HashMap<>();
+		try {
+			 empresa=empresaService.findAll();
+			
+		}catch (DataAccessException e) {
+			// TODO: handle exception
+			respuesta.put("Mensaje","Error al realizar la busqueda de datos");
+			respuesta.put("error",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String,Object>>(respuesta,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		if(empresa==null) {
+			respuesta.put("Mensaje","La empresa de ID: ".concat("VACIO ".concat("  No existe en la base de datos")));
+			return new ResponseEntity<Map<String,Object>>(respuesta,HttpStatus.NOT_FOUND);		
+		}
+	
+	return new ResponseEntity<List<Empresa>>(empresa, HttpStatus.OK);
 		}
 	@GetMapping("/find/listado/activos")
 	public List<Empresa> ListadoActivos() {

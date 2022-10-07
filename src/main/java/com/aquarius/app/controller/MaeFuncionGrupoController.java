@@ -15,7 +15,7 @@ import com.aquarius.app.models.entity.MaeFuncionGrupo;
 import com.aquarius.app.models.service.IMaeFuncionGrupoService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200" )
+//@CrossOrigin(origins="http://localhost:4200" )
 @RequestMapping("/fgrupo")
 public class MaeFuncionGrupoController {
 	

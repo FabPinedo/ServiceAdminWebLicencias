@@ -22,8 +22,8 @@ import com.aquarius.app.models.entity.MaeTablaDet;
 import com.aquarius.app.models.service.IMaeTablaDetService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200" )
-@RequestMapping("tabladet")
+//@CrossOrigin(origins="http://localhost:4200" )
+@RequestMapping("/tabladet")
 public class MaeTablaDetController {
 	@Autowired
 	private IMaeTablaDetService tablaService; 

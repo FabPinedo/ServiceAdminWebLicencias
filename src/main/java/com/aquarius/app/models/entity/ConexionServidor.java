@@ -46,6 +46,9 @@ public class ConexionServidor {
 	@Column(name="web_url")
 	private String weburl;
 	
+	@Column(name="direccion_servicio")
+	private String direccionservicio;
+	
 	
 	@Column(name="cod_empresa")
 	private Long codempresa;
@@ -54,6 +57,15 @@ public class ConexionServidor {
     @JoinColumn(name = "cod_empresa", referencedColumnName="id", insertable = false, updatable = false)
     private Empresa empresa;
 	
+	
+	public String getDireccionservicio() {
+		return direccionservicio;
+	}
+
+	public void setDireccionservicio(String direccionservicio) {
+		this.direccionservicio = direccionservicio;
+	}
+
 	public Long getId() {
 		return id;
 	}

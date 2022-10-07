@@ -26,7 +26,7 @@ import com.aquarius.app.models.entity.MaePerfil;
 import com.aquarius.app.models.service.IPerfilService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200" )
+//@CrossOrigin(origins="http://localhost:4200" )
 @RequestMapping("/errperfil")
 public class PerfilController {
 	@Autowired

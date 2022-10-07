@@ -2,9 +2,12 @@ package com.aquarius.app.models.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,8 +22,14 @@ public class LicenciasUsuarioEmpresa {
 	private String codusuario;
 	@Column(name="COD_EMPRESA")
 	private Long codempresa;
+	@OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cod_empresa", referencedColumnName="id", insertable = false, updatable = false)
+    private Empresa empresa;
 	@Column(name="COD_CONTRATO")
 	private Long codcontrato;
+	@OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "COD_CONTRATO", referencedColumnName="id", insertable = false, updatable = false)
+    private ContratoLicencia contrato;
 	
 	public Long getId() {
 		return id;
@@ -46,6 +55,20 @@ public class LicenciasUsuarioEmpresa {
 	public void setCodcontrato(Long codcontrato) {
 		this.codcontrato = codcontrato;
 	}
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+	public ContratoLicencia getContrato() {
+		return contrato;
+	}
+	public void setContrato(ContratoLicencia contrato) {
+		this.contrato = contrato;
+	}
+	
+	
 	
 	
 	

@@ -17,8 +17,11 @@ public interface ILicenciasUsuarioEmpresaDao extends JpaRepository<LicenciasUsua
 	@Query(nativeQuery = true, value= "SELECT * FROM LICENCIAS_USUARIO_EMPRESA A WHERE a.COD_USUARIO = :usuario")
 	public List<LicenciasUsuarioEmpresa> findByUser(@Param("usuario") String usuario);
 	
+	@Query(nativeQuery = true, value= "SELECT * FROM LICENCIAS_USUARIO_EMPRESA A WHERE a.COD_CONTRATO = :codcontrato")
+	public List<LicenciasUsuarioEmpresa> findcant(@Param("codcontrato") String codcontrato);
+	
 	@Transactional
 	@Modifying
-	@Query(nativeQuery = true, value= "DELETE FROM LICENCIAS_USUARIO_EMPRESA WHERE  COD_USUARIO = :usuario AND COD_CONTRATO = :ID ")
-	public void deleteByidAndUser(@Param("usuario") String usuario,@Param("ID") Long ID);
+	@Query(nativeQuery = true, value= "DELETE FROM LICENCIAS_USUARIO_EMPRESA WHERE  COD_USUARIO = :usuario  ")
+	public void deleteByidAndUser(@Param("usuario") String usuario);
 }

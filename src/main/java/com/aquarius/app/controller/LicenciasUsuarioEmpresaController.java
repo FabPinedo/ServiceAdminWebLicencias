@@ -1,5 +1,6 @@
 package com.aquarius.app.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ import com.aquarius.app.models.entity.LicenciasUsuarioEmpresa;
 import com.aquarius.app.models.service.ILicenciasUsuarioEmpresaService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200" )
+//@CrossOrigin(origins="http://localhost:4200" )
 @RequestMapping("/LicenciaUserEmpresa")
 public class LicenciasUsuarioEmpresaController {
 	@Autowired
@@ -34,11 +35,35 @@ public class LicenciasUsuarioEmpresaController {
 	public List<LicenciasUsuarioEmpresa> findByUser(@PathVariable("user") String user) {
 	return userEmpresaService.findLicenciasByUser(user);
 		}
-	@DeleteMapping(value="/find/user/{user}/contrato/{id}")
-	public ResponseEntity<?> deleteByUserandId(@PathVariable("user") String user,@PathVariable("id") Long id) {
+	
+	@GetMapping("/find/cant/{user}")
+	public  ResponseEntity<?>  findcant(@PathVariable("user") String user) {
+		List<LicenciasUsuarioEmpresa> listado=new ArrayList<LicenciasUsuarioEmpresa>();
+		Map<String,Object> respuesta= new HashMap<>();
+		Integer cantidad=0;
+		try {
+			listado= userEmpresaService.findcant(user);
+			if(listado!=null) {
+				cantidad=listado.size();
+				
+			}
+		} catch (DataAccessException e) {
+			// TODO: handle exception
+			respuesta.put("Mensaje","Error al realizar el delete en base de datos");
+			respuesta.put("error",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String,Object>>(respuesta,HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+		
+		
+		return  new ResponseEntity<Integer>(cantidad,HttpStatus.OK);
+		}
+	
+	@DeleteMapping(value="/find/user/{user}")
+	public ResponseEntity<?> deleteByUserandId(@PathVariable("user") String user) {
 		Map<String,Object> respuesta= new HashMap<>();
 		try {
-			userEmpresaService.deleteObjeto(user,id);
+			userEmpresaService.deleteObjeto(user);
 		} catch (DataAccessException e) {
 			// TODO: handle exception
 			respuesta.put("Mensaje","Error al realizar el delete en base de datos");

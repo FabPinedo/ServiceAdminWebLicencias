@@ -17,6 +17,8 @@ public interface IUsuarioService {
 	public List<MaeUsuario> findByRazonsocial(String razonsocial);
 	public Page<MaeUsuario> findAll(Pageable pageable);
 	public List<MaeUsuario> findAllEstado();
+	
+	public List<MaeUsuario> findallSitia(String codcontrato);
 	public MaeUsuario ValidarUsuario(String user,String pass);
 	
 	public Boolean save(MaeUsuario usuario);
